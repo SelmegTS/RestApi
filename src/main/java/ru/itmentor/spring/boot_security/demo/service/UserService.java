@@ -48,11 +48,6 @@ public class UserService implements UserDetailsService {
 
 
     public void delete(Long id) {
-//        Optional<User> optionalUser = userRepository.findById(id);
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            user.getRoles().forEach(role -> role = null);
-//        }
         userRepository.deleteById(id);
     }
 
@@ -60,4 +55,12 @@ public class UserService implements UserDetailsService {
         return roleRepository.findAll();
     }
 
+    public User getById(Long id) {
+            User user = null;
+            Optional<User> optionalUser = userRepository.findById(id);
+            if (optionalUser.isPresent()) {
+                user = optionalUser.get();
+            }
+            return user ;
+        }
 }

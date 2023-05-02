@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/apidocs/thymeleaf-extras-springsecurity5/3.0.4.RELEASE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="row bg-dark" style="height: 50px;">
+    <div class="col text-white ml-3 mt-2" style="font-size: 15pt;">
+        <span class="font-weight-bold" th:text="${#authentication.getName()}" id="principal"></span>
+        <span class="ms-1"> with roles:</span>
+        <span class="roleOfUser"></span>
+    </div>
+    <div class="col text-right mr-3 mt-3"><a class="text-white-50" href="/logout">Logout</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2 bg-white mt-3">
+        <ul class="nav nav-pills flex-column" role="tablist">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link leftNav" role="tab" href="#adminPanel">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link leftNav active" role="tab" href="#userPanel">User</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col bg-light mt-3">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane pillAdmin" id="adminPanel">
+                <h2>Admin Panel</h2>
+                <nav>
+                    <ul class="nav nav-tabs mt-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link rightNav active" role="tab" href="#admin">User table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rightNav" role="tab" href="#create">New User</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane tabAdmin active" id="admin">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>All Users</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First name</th>
+                                        <th>Last name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="userList">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane tabCreate" id="create">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Add new user</h5>
+                            </div>
+                            <form>
+                                <div class="card-body-col-10">
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="firstNameNew"><b>First name</b></label>
+                                        </div>
+                                        <input type="text" class="form-control" id="firstNameNew"
+                                               placeholder="First name">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="lastNameNew"><b>Last name</b></label></div>
+                                        <input type="text" class="form-control" id="lastNameNew"
+                                               placeholder="Last name">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="ageNew"><b>Age</b></label></div>
+                                        <input type="text" class="form-control" id="ageNew"
+                                               placeholder="Age">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="emailNew"><b>Email</b></label></div>
+                                        <input type="text" class="form-control" id="emailNew"
+                                               placeholder="Email">
+                                    </div>
+                                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                                        <label for="passwordNew"><b>Password</b></label>
+                                        <input type="password" class="form-control" id="passwordNew"
+                                               placeholder="Password">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="rolesNew"><b>Role</b></label></div>
+                                        <select class="custom-select roleForNew" size="2" name="select_role"
+                                                id="rolesNew">
+                                            <option value="admin">ADMIN</option>
+                                            <option value="user">USER</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3 mx-auto" style="width: 258px;">
+                                        <button type="submit" class="btn btn-success mx-auto btnCreate">Add new user
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane active pillUser" id="userPanel">
+                <h2>User information-page</h2>
+                <div class="card">
+                    <div class="card-header">
+                        <h5>About user</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody class="currentUser">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="editForm">
+    <div class="modal fade" id="editModal"
+         tabindex="-1"
+         role="dialog" aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="Id" class="col-form-label"><b>ID</b></label>
+                        <input type="text" class="form-control" id="Id" name="id" readonly>
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="FirstName" class="col-form-label"><b>First name</b></label>
+                        <input type="text" class="form-control" id="FirstName" name="firstName">
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="LastName" class="col-form-label"><b>Last name</b></label>
+                        <input type="text" class="form-control" id="LastName" name="lastName">
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="Age" class="col-form-label"><b>Age</b></label>
+                        <input type="text" class="form-control" id="Age" name="age">
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="Email" class="col-form-label"><b>Email</b></label>
+                        <input type="text" class="form-control" id="Email" name="email">
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="Password" class="col-form-label"><b>Password</b></label>
+                        <input type="password" class="form-control" id="Password">
+                    </div>
+                    <div class="mx-auto" style="width: 350px;">
+                        <div class="text-center"><label for="roles"><b>Role</b></label>
+                        </div>
+                        <select class="custom-select roleForEdit" size="2" name="select_role" id="roles">
+                            <option value="admin">ADMIN</option>
+                            <option value="user">USER</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Close
+                    </button>
+                    <input type="submit" class="btn btn-primary btnSubmit" value="Edit"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="delForm">
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog"
+         aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="delId" class="col-form-label"><b>ID</b></label>
+                        <input type="text" class="form-control" id="delId" name="id" readonly>
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="delFirstName" class="col-form-label"><b>First name</b></label>
+                        <input type="text" class="form-control" id="delFirstName"
+                               name="firstName" readonly>
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="delLastName"
+                               class="col-form-label"><b>Last name</b></label>
+                        <input type="text" class="form-control" id="delLastName"
+                               name="lastName" readonly>
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="delAge" class="col-form-label"><b>Age</b></label>
+                        <input type="text" class="form-control" id="delAge"
+                               name="age" readonly>
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="delEmail" class="col-form-label"><b>Email</b></label>
+                        <input type="text" class="form-control" id="delEmail"
+                               name="email" readonly>
+                    </div>
+                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                        <label for="delPassword" class="col-form-label"><b>Password</b></label>
+                        <input type="password" class="form-control" id="delPassword" readonly>
+                    </div>
+                    <div class="mx-auto" style="width: 350px;">
+                        <div class="text-center"><label for="delRoles"><b>Role</b></label>
+                        </div>
+                        <fieldset disabled>
+                            <select class="custom-select roleForDel" size="2" name="select_role"
+                                    id="delRoles">
+                                <option value="admin">ADMIN</option>
+                                <option value="user">USER</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Close
+                    </button>
+                    <input type="submit" class="btn btn-danger btnDelSubmit" value="Delete"
+                           readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
